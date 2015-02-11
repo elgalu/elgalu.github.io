@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: grid2 | Leo Gallucci's blog]]></title>
+  <link href="http://elgalu.github.io/blog/categories/grid2/atom.xml" rel="self"/>
+  <link href="http://elgalu.github.io/"/>
+  <updated>2015-02-10T21:57:55-03:00</updated>
+  <id>http://elgalu.github.io/</id>
+  <author>
+    <name><![CDATA[Leo Gallucci]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Run protractor against Internet Explorer VM]]></title>
+    <link href="http://elgalu.github.io/2014/run-protractor-against-internet-explorer-vm/"/>
+    <updated>2014-12-21T17:25:00-03:00</updated>
+    <id>http://elgalu.github.io/2014/run-protractor-against-internet-explorer-vm</id>
+    <content type="html"><![CDATA[<h2 id="step1">Step 1 - Get Virtualbox</h2>
+
+
+<p>Is free and available on many platforms</p>
+
+<p><a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
+
+<h2 id="step2">Step 2 - Get a free Windows Virtual Machine</h2>
+
+
+<p>If you don't have already a running Windows with IE you can quickly and legally go with this:</p>
+
+<p><a href="http://modern.ie/en-us/virtualization-tools#downloads">http://modern.ie/en-us/virtualization-tools#downloads</a></p>
+
+<p><img src="/images/virtualbox_for_linux_modernIE.png" title="VirtualBox images for Linux" alt="VirtualBox IE images" /></p>
+
+<p>If, like me, you need to test against IE9, IE10, IE11 then you'll need to download 2 VMs, one for each IE version, e.g.:</p>
+
+<ul>
+<li>IE9 - Win7</li>
+<li>IE10 - Win7 (yes you can use good old Windows 7 instead of Win8)</li>
+<li>IE11 - Win7 (yes you can use good old Windows 7 instead of Win8.1)</li>
+</ul>
+
+
+<h2 id="step3">Step 3 - Install Java on the windows VM</h2>
+
+
+<p>Once you have your Windows VM up and running, you should ensure java is installed.
+Install link here:</p>
+
+<p><a href="http://www.java.com/en/download/index.jsp">http://www.java.com/en/download/index.jsp</a></p>
+
+<p>You may need to retry this download a few times since Windows security scan gives troubles sometimes.</p>
+
+<h2 id="step4">Step 4 - Disable protected mode on IE options among other things</h2>
+
+
+<p>Go to Internet explorer options, follow these screen shots to get all setup:</p>
+
+<p><img src="/images/IE11_options1_delete_browsing_history_on_exit.png" title="IE11_options1_delete_browsing_history_on_exit" alt="IE11_options1_delete_browsing_history_on_exit" /></p>
+
+<p><img src="/images/IE11_options2_disable_protected_mode_all_zones.png" title="IE11_options2_disable_protected_mode_all_zones" alt="IE11_options2_disable_protected_mode_all_zones" /></p>
+
+<p><img src="/images/IE11_options3_turn_OFF_popup_bloquer.png" title="IE11_options3_turn_OFF_popup_bloquer" alt="IE11_options3_turn_OFF_popup_bloquer" /></p>
+
+<p><img src="/images/IE11_options4_disable_autocomplete.png" title="IE11_options4_disable_autocomplete" alt="IE11_options4_disable_autocomplete" /></p>
+
+<p><img src="/images/IE11_options5_dont_check_certificates_and_erase_temporary_files.png" title="IE11_options5_dont_check_certificates_and_erase_temporary_files" alt="IE11_options5_dont_check_certificates_and_erase_temporary_files" /></p>
+
+<p><img src="/images/IE11_options6_leave_warnings_unchecked.png" title="IE11_options6_leave_warnings_unchecked" alt="IE11_options6_leave_warnings_unchecked" /></p>
+
+<h6 id="step4-ie10-or-less-only">Following an IE10 / IE9 / IE8 necessary option:</h6>
+
+
+<p><img src="/images/IE10_disable_accelerator_button_on_selection.png" title="IE10_disable_accelerator_button_on_selection" alt="IE10_disable_accelerator_button_on_selection" /></p>
+
+<h6 id="step4-ie11-auto-updates">Check "Install new versions automatically"</h6>
+
+
+<p><img src="/images/IE11_check_Install_new_versions_automatically.png" title="IE11_check_Install_new_versions_automatically" alt="IE11_check_Install_new_versions_automatically" /></p>
+
+<h2 id="step5">Step 5 - Download selenium standalone, latest</h2>
+
+
+<p>As of this writing, latest selenium is 2.44.0, search latest at:</p>
+
+<p><a href="http://selenium-release.storage.googleapis.com/index.html">http://selenium-release.storage.googleapis.com/index.html</a></p>
+
+<p>Download these files in you windows VM:</p>
+
+<p><a href="http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar">http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar</a></p>
+
+<p><a href="http://selenium-release.storage.googleapis.com/2.44/IEDriverServer_Win32_2.44.0.zip">http://selenium-release.storage.googleapis.com/2.44/IEDriverServer_Win32_2.44.0.zip</a></p>
+
+<p>We also need the IE driver, so by using 32 bits version and placing the extracted file into your windows path should get that ready. FYI people had <a href="http://stackoverflow.com/questions/21612643/protractor-internet-explorer-slowness">issues with 64 bits versions of the driver</a> so even on an 64 bits Windows machine I suggest you avoid using x64 driver, stick to 32 bits.</p>
+
+<p>If your are unsure where to put the extracted file, copy <code>IEDriverServer.exe</code> to <code>C:\Windows\System32</code></p>
+
+<h2 id="step6">Step 6 - Run IEDriverServer.exe manually</h2>
+
+
+<p>Windows protected mode might be enabled, so run manually the file <code>IEDriverServer.exe</code>, but run it at the location path where you copied it, e.g. <code>C:\Windows\System32</code></p>
+
+<p>Running that file will trigger the Windows security pop up so you can authorize the executable with <strong>Run anyway</strong> to get that remembered by Windows:</p>
+
+<p><img src="/images/IEDriverServer_run_anyway_windows.png" title="IEDriverServer_run_anyway_windows" alt="IEDriverServer_run_anyway_windows" /></p>
+
+<p>Then <em>Allow access</em> for it. This is more related to Windows firewall actually:</p>
+
+<p><img src="/images/IEDriverServer_enable_firewall.png" title="IEDriverServer_enable_firewall" alt="IEDriverServer_enable_firewall" /></p>
+
+<p><strong>IMPORTANT</strong> Close running <code>IEDriverServer.exe</code> now, this run was only to trigger Windows security and firewall dialogs.</p>
+
+<h2 id="step7">Step 7 - Find out VM IP address</h2>
+
+
+<p>You can do so by opening the Windows command prompt cmd.exe then type <code>ipconfig</code> a common port number given by VirtualBox to the VM is <strong>10.0.2.15</strong> and VMWare might look more like <strong>192.168.240.131</strong> but it varies on each environment.</p>
+
+<p>Take note of the IP address and within your host machine edit <strong>/etc/hosts</strong> file too add a new entry, I use custom domain names <strong>ie11.dev</strong> and so on like this:</p>
+
+<p><code>bash
+192.168.240.131   ie11.dev
+192.168.240.132   ie10.dev
+</code></p>
+
+<p>So within your Protractor project you will need a config file that points selenium to the proper URL, e.g. a file <strong>ie11.conf.js</strong></p>
+
+<p><code>js
+config.capabilities.browserName = 'internet explorer';
+config.capabilities.version = '11';
+config.seleniumAddress = 'http://ie11.dev:4444/wd/hub';
+</code></p>
+
+<h2 id="step8">Step 8 - Write a .bat script to start selenium</h2>
+
+
+<p>Within your Window VM, you should place this <code>ie11.bat</code> file in the same directory where you downloaded the selenium standalone jar, for example in your downloads folder.</p>
+
+<p><code>bat
+@echo IE11 selenium machine
+java -jar selenium-server-standalone-2.44.0.jar -port 4444
+@pause
+</code></p>
+
+<h2 id="step9">Step 9 - Run ie11.bat</h2>
+
+
+<p>Note port 4444 is the default selenium port, you can change it if needed. We need Windows firewall to add a rule to allow incoming connections to that port; accept all when the Firewall screen appears after running <code>ie11.bat</code></p>
+
+<p><img src="/images/Windows_firewall_for_java.png" title="Windows_firewall_for_java" alt="Windows_firewall_for_java" /></p>
+
+<p><strong>IMPORTANT</strong> Leave this script running on Windows machine. When you restart the VM you'll have to manually start <code>ie11.bat</code> again unless you add it to the startup program list.</p>
+
+<h2 id="step10">Step 10 - Configure protractor to use IE11</h2>
+
+
+<p>We already saw this on step 7 but let's look again with an alternative syntax:</p>
+
+<p>```js
+exports.config = {</p>
+
+<pre><code>seleniumAddress = 'http://ie11.dev:4444/wd/hub';
+capabilities: {
+    'browserName': 'internet explorer',
+    'platform': 'ANY',
+    'version': '11'
+},
+</code></pre>
+
+<p>};
+```</p>
+
+<h2 id="final-notes">Final notes and extras</h2>
+
+
+<p>This isn't the only way to run against IE machine, you could install nodejs there too and install protractor.</p>
+
+<p>Also note, you can go a step further and setup a <a href="https://code.google.com/p/selenium/wiki/Grid2">selenium standalone grid</a> if you want to maintain a more complex infrastructure.</p>
+
+<p>Steps to do that below.</p>
+
+<h2 id="nodejs-win">Alternative 1 - Install nodejs on Windows</h2>
+
+
+<p>Setting up protractor on Windows is quite doable, download first:</p>
+
+<p><a href="http://nodejs.org/download/">http://nodejs.org/download/</a></p>
+
+<p>And select Windows Installer of course. I recommend you choose 32 bits installers.
+Follow setup wizard.</p>
+
+<p>Once installed, open a Command Prompt or <code>CMD.EXE</code></p>
+
+<p>Install protractor globally:</p>
+
+<p><code>bat
+npm install -g protractor
+</code></p>
+
+<p>Make protractor download selenium and IE Driver for you:</p>
+
+<p><code>bat
+webdriver-manager update --ie
+</code></p>
+
+<p>You can start selenium on a custom port if need by adding <code>--seleniumPort=4444</code></p>
+
+<p><code>bat
+webdriver-manager start
+</code></p>
+
+<h2 id="grid2">Alternative 2 - Use Selenium Grid2</h2>
+
+
+<p>Within the host machine, in my case Linux. Instead of running <code>webdriver-manager start</code> you can switch to a standalone grid, a.k.a "hub" by running this simple command:</p>
+
+<p><code>bash
+java -jar selenium-server-standalone-2.44.0.jar -role hub -port 6666 -newSessionWaitTimeout 25000
+</code></p>
+
+<p>Port <em>6666</em> is just an arbitrary one, you can stick with <em>4444</em> if you like but I prefer to state some difference.</p>
+
+<p>Note you can get selenium standalone jar file with wget:</p>
+
+<p><code>bash
+wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar
+</code></p>
+
+<p>Also, you may need to open that port 6666 on your firewall, I did it with <code>ufw</code> in Ubuntu 13:</p>
+
+<p><code>bash
+sudo ufw allow 6666
+</code></p>
+
+<p>So leave <code>java -jar selenium-server-standalone</code> command running in an open terminal, this is the selenium grid that nodes will connect to.</p>
+
+<p>If you want to switch to a selenium grid, you will need to change <code>ie11.bat</code> file like below. Also note IP <strong>10.0.2.2</strong> is usually VirtualBox host machine IP address, VMWare IP might be <strong>192.168.240.1</strong> when using the NAT interface.</p>
+
+<p><code>bat
+@echo IE11 selenium hub machine
+set HUBURL="http://10.0.2.2:6666/grid/register"
+set BROWSERCAPS="maxInstances=1,browserName=internet explorer,version=11"
+java -jar selenium-server-standalone-2.44.0.jar -role node -hub %HUBURL% -port 4444 -maxSession 1 -browser %BROWSERCAPS%
+@pause
+</code></p>
+
+<h4 id="grid2-issues">Troubleshooting Grid2</h4>
+
+
+<p>Check the selenium grid logs, on your host machine (in my case Linux) to see if the output contains the following error or similar:</p>
+
+<p><code>bash
+WARNING: Failed to check status of node: Connect to 10.0.2.15:4444 timed out
+</code></p>
+
+<p>That's the case when the firewall is blocking port 4444 on the guest VM.</p>
+
+<p>If you can not work around it, considering moving your VM network setup from <strong>NAT</strong> to <strong>Bridged</strong>. Then you will have to find out the IP address of you host machine, in my case Linux, and replace <code>10.0.2.2</code> with that IP, e.g. <code>192.168.0.3</code></p>
+
+<p>Networking setup details is are little beyond the scope of this post.</p>
+
+<h3>Goodbye</h3>
+
+<p>Hope this post helps you.</p>
+
+<p>Have a good time writing e2e protractor tests !  :D</p>
+]]></content>
+  </entry>
+  
+</feed>

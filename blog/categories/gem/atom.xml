@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: gem | Leo Gallucci's blog]]></title>
+  <link href="http://elgalu.github.io/blog/categories/gem/atom.xml" rel="self"/>
+  <link href="http://elgalu.github.io/"/>
+  <updated>2015-02-10T21:57:55-03:00</updated>
+  <id>http://elgalu.github.io/</id>
+  <author>
+    <name><![CDATA[Leo Gallucci]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Add achievement badges to your gem README]]></title>
+    <link href="http://elgalu.github.io/2013/add-achievement-badges-to-your-gem-readme/"/>
+    <updated>2013-12-14T19:02:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/add-achievement-badges-to-your-gem-readme</id>
+    <content type="html"><![CDATA[<p>I really enjoy crashing into a gem with a markdown-ready README file that includes top badges telling me things like the current available gem version, the fact that is continuously being tested using travis or knowing the developer cares about the gem dependencies being up-to-date!</p>
+
+<p>Take a look how this looks like in <a href="https://github.com/wycats/thor#readme">thor</a> or some tiny <a href="https://github.com/elgalu/boolean_class#booleanclass">gem</a> of mine.</p>
+
+<p>Achieving all that will take some steps, here is how:</p>
+
+<h2>How the badges will look like</h2>
+
+<p><a href="https://rubygems.org/gems/boolean_class"><img src="https://badge.fury.io/rb/boolean_class.png" alt="Gem Version" /></a>
+<a href="https://travis-ci.org/elgalu/boolean_class"><img src="https://travis-ci.org/elgalu/boolean_class.png" alt="Build Status" /></a>
+<a href="https://gemnasium.com/elgalu/boolean_class"><img src="https://gemnasium.com/elgalu/boolean_class.png" alt="Dependency Status" /></a>
+<a href="https://codeclimate.com/github/elgalu/boolean_class"><img src="https://codeclimate.com/github/elgalu/boolean_class.png" alt="Code Climate" /></a>
+<a href="https://coveralls.io/r/elgalu/boolean_class"><img src="https://coveralls.io/repos/elgalu/boolean_class/badge.png?branch=master" alt="Coverage Status" /></a></p>
+
+<h2>Where to sign-up</h2>
+
+<ul>
+<li><p>For the gem version badge just <a href="http://guides.rubygems.org/command-reference/#gem_push">push to rubygems</a> at least 1 time and the badge will be there for you. Also, the "Version Badge" page offers an easy copy and paste builder of the URL that you can use <a href="http://badge.fury.io/for/rb/">here</a></p></li>
+<li><p>For your build status go to <a href="https://travis-ci.org">Travis-CI.org</a> and follow the link "Sign in with GitHub"</p></li>
+<li><p>For gem dependencies status <a href="https://gemnasium.com/users/auth/github">Signup at Gemnasium</a></p></li>
+<li><p>For code quality stats <a href="https://codeclimate.com/github/signup">Signup at Code Climate</a></p></li>
+<li><p>For coverage percentage first <a href="https://coveralls.io/authorize/github">Signup once at Coveralls</a> then for each of you projects go to the <a href="https://coveralls.io/repos/new">Add Repo page</a></p></li>
+<li><p>For analytics <a href="http://www.google.com/analytics">Signup at Google Analytics</a> and <a href="http://githalytics.com/">Signup at githalytics</a></p></li>
+<li><p>For pretty documentation generator read <a href="http://documentup.com">here</a>
+or simply go to <code>documentup.com/your_github_user/your_repo_name</code></p></li>
+</ul>
+
+
+<h2>Getting your code ready to use them</h2>
+
+<p>Gem version, code climate and gem dependencies do not require more work on your side besides pushing your updates to github, those services will take care of the rest.</p>
+
+<h3>Travis-CI</h3>
+
+<p>Add this <code>.travis.yml</code> file to your project root, change it depending on the ruby versions you are interested to support:</p>
+
+<p><code>ruby
+language: ruby
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - jruby-1.7.9
+</code></p>
+
+<h3>Coveralls with SimpleCov</h3>
+
+<p>I use <a href="https://github.com/colszowka/simplecov">SimpleCov</a> for test coverage, coveralls gem take care of your badge,</p>
+
+<p>Add necessary dependencies to your gemspec:</p>
+
+<p><code>ruby
+s.add_development_dependency "simplecov", "&gt;= 0.8.2"
+s.add_development_dependency 'coveralls', '&gt;= 0.7.0'
+</code></p>
+
+<p>If you use rspec, update your <code>spec_helper.rb</code> and add this lines to the very beginning:</p>
+
+<p>```ruby
+require 'simplecov'
+require 'coveralls'</p>
+
+<p>SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+SimpleCov.start
+```</p>
+
+<h2>Update your README file</h2>
+
+<p>Replace strings <strong>elgalu</strong> with your github user and <strong>boolean_class</strong> with your github repo name.
+It's probably a better idea that you use a templating tool for this like <a href="https://github.com/elgalu/gem-newgem">the one I built and use</a></p>
+
+<pre><code># TODO: Your gem name
+
+[![Gem Version][GV img]][Gem Version]
+[![Build Status][BS img]][Build Status]
+[![Dependency Status][DS img]][Dependency Status]
+[![Code Climate][CC img]][Code Climate]
+[![Coverage Status][CS img]][Coverage Status]
+
+## Description
+
+TODO: Your gem description
+
+[Gem Version]: https://rubygems.org/gems/boolean_class
+[Build Status]: https://travis-ci.org/elgalu/boolean_class
+[travis pull requests]: https://travis-ci.org/elgalu/boolean_class/pull_requests
+[Dependency Status]: https://gemnasium.com/elgalu/boolean_class
+[Code Climate]: https://codeclimate.com/github/elgalu/boolean_class
+[Coverage Status]: https://coveralls.io/r/elgalu/boolean_class
+
+[GV img]: https://badge.fury.io/rb/boolean_class.png
+[BS img]: https://travis-ci.org/elgalu/boolean_class.png
+[DS img]: https://gemnasium.com/elgalu/boolean_class.png
+[CC img]: https://codeclimate.com/github/elgalu/boolean_class.png
+[CS img]: https://coveralls.io/repos/elgalu/boolean_class/badge.png?branch=master
+</code></pre>
+
+<p>Don't forget to let me know if i'm missing new cool badges out there!</p>
+
+<h2>Google Analytics</h2>
+
+<p>I've recently added <a href="http://githalytics.com/">githalytics</a> service in order to have <a href="http://www.google.com/analytics/">Google Analytics</a> for each of my github repos. Note there is also <a href="https://bitdeli.com/">bitdeli</a> service but haven't tested it yet, let me know if is better or more free.</p>
+
+<p>To do so:</p>
+
+<ol>
+<li><p>Go to <a href="http://www.google.com/analytics/">Google Analytics</a> website and signup to get your Property ID, e.g.</p>
+
+<pre><code> Default URL protocol: https://
+ Default URL source..: github.com/elgalu/time_ago_in_words
+</code></pre>
+
+<p> You may also delete <code>github.com</code> from your GA <strong>Referral Exclusion List</strong></p></li>
+<li><p>Go to <a href="http://githalytics.com/">githalytics</a> and sign up, e.g.</p>
+
+<pre><code> TrackingCode[url]:  https://github.com/elgalu/time_ago_in_words
+ TrackingCode[code]: UA-12345-12
+</code></pre></li>
+<li><p>Add the fake image badge that will send data for analytics purposes, e.g.</p>
+
+<pre><code> [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/3fe2425a26ab0ca00b5bc6acf817af59 "githalytics.com")](http://githalytics.com/elgalu/time_ago_in_words)
+</code></pre></li>
+</ol>
+
+
+<p>That should be it. Remember to check later on Google Analytics site for the collected data, works like a charm!</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: json | Leo Gallucci's blog]]></title>
+  <link href="http://elgalu.github.io/blog/categories/json/atom.xml" rel="self"/>
+  <link href="http://elgalu.github.io/"/>
+  <updated>2015-02-10T21:57:55-03:00</updated>
+  <id>http://elgalu.github.io/</id>
+  <author>
+    <name><![CDATA[Leo Gallucci]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[JSONP for Dummies]]></title>
+    <link href="http://elgalu.github.io/2013/jsonp-for-dummies/"/>
+    <updated>2013-03-08T23:54:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/jsonp-for-dummies</id>
+    <content type="html"><![CDATA[<p>If you read <a href="http://en.wikipedia.org/wiki/JSONP">wikipedia</a> definition:</p>
+
+<blockquote><p>JSONP or "JSON with padding" is a communication technique used in JavaScript. It provides a method to request data from a server in a different domain, something prohibited by typical web browsers because of the same origin policy.</p></blockquote>
+
+<p>But let's dig it right away with an example. I will use <a href="https://github.com/robertodecurnex/J50Npi">J50Npi</a> standalone javascript library for that.</p>
+
+<h2>Step by Step Beginner's Sample</h2>
+
+<p>Say you want to client-side print the user's Country IP using some external JSONP free service.</p>
+
+<p>You can test that solution from your browser right now:</p>
+
+<h4>1. Open your Browser</h4>
+
+<h4>2. Open a non javascript intensive page; e.g. <a href="http://robertodecurnex.github.com/">Roberto's blog</a></h4>
+
+<h4>3. Open the console by pressing F12 or whatever key your browser use. You may need to select tab 'Console' (tested on Chrome and Internet Explorer 10)</h4>
+
+<h4>4. Paste the below code (within the console)</h4>
+
+<p>```javascript</p>
+
+<p>// This line taken from J50Npi.min.js (within this repo)
+var J50Npi={currentScript:null,getJSON:function(b,d,h){var g=b+(b.indexOf("?")+1?"&amp;":"?");var c=document.getElementsByTagName("head")[0];var a=document.createElement("script");var f=[];var e="";this.success=h;d.callback="J50Npi.success";for(e in d){f.push(e+"="+encodeURIComponent(d[e]))}g+=f.join("&amp;");a.type="text/javascript";a.src=g;if(this.currentScript){c.removeChild(currentScript)}c.appendChild(a)},success:null};</p>
+
+<p>// This is a WorldIP free geo-location database.
+var url = "http://api.wipmania.com/jsonp";</p>
+
+<p>// No specific data need to be sent there
+var data = {};</p>
+
+<p>// We need a function callback to be executed after the response is received
+var callback = function(geodata){ alert(geodata.address.country); };</p>
+
+<p>// And here is the magic:
+J50Npi.getJSON(url, data, callback);</p>
+
+<p>```</p>
+
+<p>You should see an alert saying your current (ip based location) country name after half a second or so.</p>
+
+<p><img src="/images/J50Npi_alert_sample.png" title="Optional title" alt="J50Npi IMG" /></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,738 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Tools for creating your first ruby gem - Leo Gallucci's blog</title>
+  <meta name="author" content="Leo Gallucci">
+
+  
+  <meta name="description" content="This post is about tools you can use to turn your ruby idea into a ruby gem so you can share it with the ruby world.
+I will use a tiny gem of mine &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://elgalu.github.io/2013/tools-for-creating-your-first-ruby-gem/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Leo Gallucci's blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18144954-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:elgalu.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+    <li><a href="/">
+        <span class="blue_light">
+            Leo Gallucci's blog
+        </span>
+       
+           <span class="blue_dark">
+             about Ruby and friendly technologies
+           </span>
+       
+    </a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Tools for Creating Your First Ruby Gem</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-05T11:24:00-03:00" pubdate data-updated="true">Mar 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This post is about tools you can use to turn your ruby idea into a ruby gem so you can share it with the ruby world.
+I will use a tiny gem of mine <a href="https://github.com/elgalu/twitter_anonymous_client">twitter_anonymous_client</a> as a practical example and also use some power tools like <a href="http://yardoc.org/">yard</a> that may be overkill for this tiny project but nice to know when working on bigger projects later on.</p>
+
+<h2>Gem Creation</h2>
+
+<p>You have a couple of options to start your gem files and directory structure, you can choose to write all of if from scratch, copy &amp; paste from another gem source you liked, or use a bootstrap tool that does the work for you.</p>
+
+<p>A popular option is using <a href="http://gembundler.com/v1.2/bundle_gem.html">bundle gem</a> <em>GEMNAME</em> to bootstrap your gem. I started with bundler but right after the third gem i got tired of being fixed to a template not so easy to customize without sticking my nose around <a href="https://github.com/carlhuda/bundler/tree/master/lib/bundler/templates/newgem">bundler</a> source.</p>
+
+<p>So i partially extracted that into a gem called <a href="https://github.com/elgalu/gem-newgem">gem-newgem</a> and turned it into a RubyGems plugin which is what i will use in this post.</p>
+
+<h3>Bootstrap your gem</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>gem install gem-newgem
+</span><span class='line'>Successfully installed gem-newgem-0.1.1
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>gem new twitter_anonymous_client --summary <span class="s1">&#39;Twitter public (anonymous) client for old v1.0 API&#39;</span>
+</span><span class='line'>      create  twitter_anonymous_client
+</span><span class='line'>      create  twitter_anonymous_client/twitter_anonymous_client.gemspec
+</span><span class='line'>      create  twitter_anonymous_client/.gitignore
+</span><span class='line'>      create  twitter_anonymous_client/.rspec
+</span><span class='line'>      create  twitter_anonymous_client/.travis.yml
+</span><span class='line'>      create  twitter_anonymous_client/CHANGELOG.md
+</span><span class='line'>      create  twitter_anonymous_client/Gemfile
+</span><span class='line'>      create  twitter_anonymous_client/LICENSE.md
+</span><span class='line'>      create  twitter_anonymous_client/README.md
+</span><span class='line'>      create  twitter_anonymous_client/Rakefile
+</span><span class='line'>      create  twitter_anonymous_client/lib/twitter_anonymous_client.rb
+</span><span class='line'>      create  twitter_anonymous_client/lib/twitter_anonymous_client/version.rb
+</span><span class='line'>      create  twitter_anonymous_client/spec/twitter_anonymous_client_spec.rb
+</span><span class='line'>      create  twitter_anonymous_client/spec/spec_helper.rb
+</span><span class='line'>INFO: Initializing git repo at twitter_anonymous_client/
+</span><span class='line'>  git init
+</span><span class='line'>Initialized empty Git repository in ~/twitter_anonymous_client/.git/
+</span><span class='line'>  git add .
+</span><span class='line'>INFO: Will add remote so you get ready to push to github
+</span><span class='line'>  git remote add github git@github.com:elgalu/twitter_anonymous_client.git
+</span><span class='line'>INFO: Make branch tracking automatic
+</span><span class='line'>  git config --add branch.master.remote github
+</span><span class='line'>  git config --add branch.master.merge refs/heads/master
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>twitter_anonymous_client
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you take a look at the files you will see how your <code>~/.gitconfig</code> information is used, the gem name you provided and the summary are used even in the README.md file.</p>
+
+<p>This is how my <a href="https://github.com/elgalu/twitter_anonymous_client/blob/master/twitter_anonymous_client.gemspec">.gemspec</a> was generated, you&#8217;ll soon find out this is opinionated stuff, feel free to modify the <a href="https://github.com/elgalu/newgem-template">template</a> found at <code>~/.newgem-templates</code> to get the requirements you need:</p>
+
+<figure class='code'><figcaption><span>.gemspec</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;twitter_anonymous_client/version&#39;</span>
+</span><span class='line'><span class="ss">Gem</span><span class="p">:</span><span class="ss">:Specification</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">spec</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">platform</span>      <span class="o">=</span> <span class="ss">Gem</span><span class="p">:</span><span class="ss">:Platform</span><span class="o">::</span><span class="no">RUBY</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">name</span>          <span class="o">=</span> <span class="s2">&quot;twitter_anonymous_client&quot;</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">version</span>       <span class="o">=</span> <span class="ss">TwitterAnonymousClient</span><span class="p">:</span><span class="ss">:VERSION</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">summary</span>       <span class="o">=</span> <span class="sx">%q{Twitter public (anonymous) client for old v1.0 API}</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">description</span>   <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">summary</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">required_ruby_version</span>     <span class="o">=</span> <span class="s1">&#39;&gt;= 1.9.2&#39;</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">required_rubygems_version</span> <span class="o">=</span> <span class="s1">&#39;&gt;= 1.8&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">license</span>       <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">authors</span>       <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;Leo Gallucci&quot;</span><span class="o">]</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">email</span>         <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;elgalu3@gmail.com&quot;</span><span class="o">]</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">homepage</span>      <span class="o">=</span> <span class="s2">&quot;https://github.com/elgalu/twitter_anonymous_client&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">executables</span>   <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="sr">%r{^bin/}</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">files</span>         <span class="o">=</span> <span class="sb">`git ls-files`</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vg">$/</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">test_files</span>    <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="sr">%r{^(test|spec|features)/}</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">require_paths</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;lib&quot;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">add_development_dependency</span> <span class="s2">&quot;bundler&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;= 1.2&quot;</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">add_development_dependency</span> <span class="s2">&quot;rake&quot;</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">add_development_dependency</span> <span class="s2">&quot;rspec&quot;</span><span class="p">,</span> <span class="s2">&quot;~&gt; 2.13&quot;</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">add_development_dependency</span> <span class="s2">&quot;redcarpet&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;= 2.2&quot;</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">add_development_dependency</span> <span class="s2">&quot;yard&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;= 0.8&quot;</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">add_development_dependency</span> <span class="s2">&quot;simplecov&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;= 0.7.1&quot;</span>
+</span><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">add_development_dependency</span> <span class="s1">&#39;coveralls&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;= 0.5.8&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I will just add one runtime dependency there:</p>
+
+<figure class='code'><figcaption><span>Add to .gemspec</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">spec</span><span class="o">.</span><span class="n">add_runtime_dependency</span> <span class="s2">&quot;strongly_typed&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By looking at the README.md file, you&#8217;ll see how much i like putting badges at the top of the doc.
+You will need to sign-up to those services to get your gem up and running, i wrote another <a href="http://elgalu.github.com/2013/add-achievement-badges-to-your-gem-readme/">post</a> on how to do it.</p>
+
+<h3>Spec first, code later</h3>
+
+<p>First and foremost, check everything is working with bundler and rspec:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Why not, use the latest available ruby version (as of this writing)</span>
+</span><span class='line'><span class="nv">$ </span>ruby -v
+</span><span class='line'>ruby 2.0.0p0 <span class="o">(</span>2013-02-24 revision 39474<span class="o">)</span> <span class="o">[</span>x86_64-linux<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Get your Gemfile.lock ready</span>
+</span><span class='line'><span class="nv">$ </span>bundle install
+</span><span class='line'>Using ...
+</span><span class='line'>Installing ...
+</span><span class='line'>Using twitter_anonymous_client <span class="o">(</span>0.0.1<span class="o">)</span> from <span class="nb">source</span> ...
+</span><span class='line'>
+</span><span class='line'><span class="c"># Let&#39;s see if some rake tasks are already available</span>
+</span><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake -T
+</span><span class='line'>rake build    <span class="c"># Build twitter_anonymous_client-0.0.1.gem into the pkg directory.</span>
+</span><span class='line'>rake install  <span class="c"># Build and install twitter_anonymous_client-0.0.1.gem into system gems.</span>
+</span><span class='line'>rake release  <span class="c"># Create tag v0.0.1 and build and push twitter_anonymous_client-0.0.1.gem to Rubygems</span>
+</span><span class='line'>rake spec     <span class="c"># Run RSpec code examples</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Check the default task is to run the spec&#39;s</span>
+</span><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
+</span><span class='line'>...
+</span><span class='line'>TwitterAnonymousClient
+</span><span class='line'>  should have a version number
+</span><span class='line'>
+</span><span class='line'>Finished in 0.00537 seconds
+</span><span class='line'>1 example, 0 failures
+</span><span class='line'>...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Everything nice so far!</p>
+
+<p>Now is time to write about what we expect from this gem:</p>
+
+<p>Create a spec file like <code>spec/user_timeline_spec.rb</code></p>
+
+<figure class='code'><figcaption><span>spec/user_timeline_spec.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;spec_helper&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">describe</span> <span class="ss">Twitter</span><span class="p">:</span><span class="ss">:Client</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">let</span><span class="p">(</span><span class="ss">:screen_name</span><span class="p">)</span> <span class="p">{</span> <span class="s1">&#39;elgalu&#39;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">let</span><span class="p">(</span><span class="ss">:client</span><span class="p">)</span> <span class="p">{</span> <span class="ss">Twitter</span><span class="p">:</span><span class="ss">:Client</span><span class="o">.</span><span class="n">new</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">let</span><span class="p">(</span><span class="ss">:tweets</span><span class="p">)</span> <span class="p">{</span> <span class="n">client</span><span class="o">.</span><span class="n">user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="p">,</span> <span class="ss">count</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">let</span><span class="p">(</span><span class="ss">:first_tweet</span><span class="p">)</span> <span class="p">{</span> <span class="n">tweets</span><span class="o">.</span><span class="n">first</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">describe</span> <span class="s1">&#39;#user_timeline&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">context</span> <span class="s1">&#39;first tweet&#39;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">it</span> <span class="s1">&#39;should be a Tweet&#39;</span> <span class="k">do</span>
+</span><span class='line'>        <span class="n">first_tweet</span><span class="o">.</span><span class="n">should</span> <span class="n">be_a</span><span class="p">(</span><span class="ss">Twitter</span><span class="p">:</span><span class="ss">:Tweet</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">it</span> <span class="s1">&#39;should respond to id, text, created_at&#39;</span> <span class="k">do</span>
+</span><span class='line'>        <span class="n">first_tweet</span><span class="o">.</span><span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:id</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">first_tweet</span><span class="o">.</span><span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:text</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">first_tweet</span><span class="o">.</span><span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:created_at</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&#8217;s leave out web mocking for now and expect those specs to run against real twitter servers.</p>
+
+<p>Run <code>$ bundle exec rake spec</code> and watch it fail.</p>
+
+<h3>Code to make the specs pass</h3>
+
+<p>Good luck with that! &#8230;. or &#8230; take a look at <a href="https://github.com/elgalu/twitter_anonymous_client">twitter_anonymous_client</a> source code.</p>
+
+<h2>Add documentation using <a href="http://yardoc.org/">yard</a></h2>
+
+<p>Yard is really nice producing beauty documentation files, all you need to do is remember a few keywords:</p>
+
+<figure class='code'><figcaption><span>Yard Doc Example</span><a href='http://rubydoc.info/gems/twitter_anonymous_client/Twitter/API/Timelines#user_timeline-instance_method'>link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Get some user timeline by screen name (last statuses)</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># @param [String] screen_name the twitter user slug</span>
+</span><span class='line'><span class="c1"># @param [Hash] opts the options to retrieve the statuses</span>
+</span><span class='line'><span class="c1"># @option opts [Integer] :count The number of statuses to retrieve</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># @example</span>
+</span><span class='line'><span class="c1">#   Twitter::Client.new.user_timeline(&#39;DolarBlue&#39;, count: 1)</span>
+</span><span class='line'><span class="c1">#   #=&gt; [#&lt;Twitter::Tweet:0x011.. @id=&quot;308609..., @text=&quot;Dolar Paralelo: $7,84.....</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should always check how your documentation looks like from time to time
+Run yard server! i will pass a different port cause i&#8217;m already using 8808 with something else:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>yard server --port 8828 --reload
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>info<span class="o">]</span>: No yardoc db found in .yardoc, parsing <span class="nb">source </span>before starting server...
+</span><span class='line'>Files:           2
+</span><span class='line'>...
+</span><span class='line'>Methods:         1 <span class="o">(</span>    0 undocumented<span class="o">)</span>
+</span><span class='line'> 33.33% documented
+</span><span class='line'>&gt;&gt; YARD 0.8.4.1 documentation server at http://0.0.0.0:8828
+</span><span class='line'>...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Open your browser at (http://localhost:8828) and find some of your type errors ;)</p>
+
+<h2>Publish your gem</h2>
+
+<p>Ensure you have your github username configured:</p>
+
+<pre><code>git config --global github.user your_user_name
+</code></pre>
+
+<h3>Only the first time on the your gem:</h3>
+
+<pre><code>curl -u your_user_name https://rubygems.org/api/v1/api_key.yaml &gt; ~/.gem/credentials
+### Enter host password for user 'your_user_name': ......
+</code></pre>
+
+<h3>Every time you push a gem release</h3>
+
+<p>Follow these steps</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Commit your changes</span>
+</span><span class='line'>git add ... <span class="o">&amp;&amp;</span> git commit ...
+</span><span class='line'>
+</span><span class='line'><span class="c"># Run specs on each ruby version you support to make sure everything works</span>
+</span><span class='line'>rbenv shell 2.0.0-p0
+</span><span class='line'>bundle <span class="nb">exec </span>rake spec
+</span><span class='line'>rbenv shell 1.9.3-p392
+</span><span class='line'>bundle <span class="nb">exec </span>rake spec
+</span><span class='line'>
+</span><span class='line'><span class="c"># Separate commit to bump version</span>
+</span><span class='line'>git add ... version.rb
+</span><span class='line'>git commit -m <span class="s1">&#39;Bump version to 0.0.1&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Tag your release</span>
+</span><span class='line'>git tag -a v0.0.1 -m <span class="s1">&#39;Version 0.0.1&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Build your gem</span>
+</span><span class='line'>gem build twitter_anonymous_client.gemspec
+</span><span class='line'>
+</span><span class='line'><span class="c"># Push to github</span>
+</span><span class='line'>git remote add origin git@github.com:elgalu/twitter_anonymous_client.git
+</span><span class='line'>
+</span><span class='line'><span class="c"># Make tracking automatic</span>
+</span><span class='line'>git config --add branch.master.remote origin
+</span><span class='line'>git config --add branch.master.merge refs/heads/master
+</span><span class='line'>
+</span><span class='line'><span class="c"># Push updates and tags</span>
+</span><span class='line'>git push origin master
+</span><span class='line'>git push origin master --tags
+</span><span class='line'>
+</span><span class='line'><span class="c"># Push to rubygems</span>
+</span><span class='line'>gem push twitter_anonymous_client-0.0.1.gem
+</span><span class='line'><span class="c">#=&gt; Pushing gem to https://rubygems.org...</span>
+</span><span class='line'><span class="c">#=&gt; Successfully registered gem: twitter_anonymous_client (0.0.1)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now tell ma you have your own ruby gem!</p>
+
+<h2>More info</h2>
+
+<p>If you need to go down into more details you can check:</p>
+
+<ul>
+<li><a href="https://github.com/radar/guides/blob/master/gem-development.md">radar guide on gem-development</a></li>
+<li><a href="http://guides.rubygems.org/make-your-own-gem/">RubyGems guide</a></li>
+<li><a href="http://mlomnicki.com/ruby/rubygems/2011/01/22/jeweler-vs-bundler.html">Jeweler vs Bundler for gem development</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Leo Gallucci</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-05T11:24:00-03:00" pubdate data-updated="true">Mar 5<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gem-newgem/'>gem-newgem</a>, <a class='category' href='/blog/categories/gem-creation/'>gem_creation</a>, <a class='category' href='/blog/categories/rspec/'>rspec</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/rubygems/'>rubygems</a>, <a class='category' href='/blog/categories/twitter/'>twitter</a>, <a class='category' href='/blog/categories/twitter-anonymous-client/'>twitter_anonymous_client</a>, <a class='category' href='/blog/categories/yard/'>yard</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://elgalu.github.io/2013/tools-for-creating-your-first-ruby-gem/" data-via="elgalu" data-counturl="http://elgalu.github.io/2013/tools-for-creating-your-first-ruby-gem/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/console-ruby-debug-is-easy/" title="Previous Post: Console Ruby debug is easy">&laquo; Console Ruby debug is easy</a>
+      
+      
+        <a class="basic-alignment right" href="/2013/jsonp-for-dummies/" title="Next Post: JSONP for Dummies">JSONP for Dummies &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/run-protractor-against-internet-explorer-vm/">Run protractor against Internet Explorer VM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/add-achievement-badges-to-your-gem-readme/">Add achievement badges to your gem README</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/jsonp-for-dummies/">JSONP for Dummies</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/tools-for-creating-your-first-ruby-gem/">Tools for creating your first ruby gem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/console-ruby-debug-is-easy/">Console Ruby debug is easy</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/elgalu">@elgalu</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'elgalu',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("elgalu", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/elgalu" class="twitter-follow-button" data-show-count="false">Follow @elgalu</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Leo Gallucci -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'elgalu';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://elgalu.github.io/2013/tools-for-creating-your-first-ruby-gem/';
+        var disqus_url = 'http://elgalu.github.io/2013/tools-for-creating-your-first-ruby-gem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

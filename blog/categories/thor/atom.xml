@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: thor | Leo Gallucci's blog]]></title>
+  <link href="http://elgalu.github.io/blog/categories/thor/atom.xml" rel="self"/>
+  <link href="http://elgalu.github.io/"/>
+  <updated>2015-02-10T21:57:55-03:00</updated>
+  <id>http://elgalu.github.io/</id>
+  <author>
+    <name><![CDATA[Leo Gallucci]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to run thor tasks from your ruby scripts]]></title>
+    <link href="http://elgalu.github.io/2013/how-to-run-thor-tasks-from-your-ruby-scripts/"/>
+    <updated>2013-02-26T15:10:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/how-to-run-thor-tasks-from-your-ruby-scripts</id>
+    <content type="html"><![CDATA[<p>If you have a thor task defined in some file like i do:</p>
+
+<p><div><script src='https://gist.github.com/5040554.js?file=newgem.thor'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>Normally, you would invoke this thor task <em>newgem</em> from the command-line like this:</p>
+
+<pre><code>$ thor newgem some_name --test-framework rspec
+</code></pre>
+
+<p>But what if you need to do that from another ruby script?</p>
+
+<p>Well, you can do so by passing the arguments directly, like this:</p>
+
+<p><code>ruby
+args = ["some_name", "--test-framework", "rspec"]
+Newgem.start(args)
+</code></p>
+
+<p>Using <a href="http://rdoc.info/github/wycats/thor/Thor/Base/ClassMethods#start-instance_method">start</a> is a way to go, but thor <a href="https://github.com/wycats/thor/blob/master/lib/thor/base.rb#L423">documentation</a> suggest using invoke() instead, like this:</p>
+
+<p><code>ruby
+args = ["some_name"]
+opts = {:test_framework =&gt; 'rspec'}
+script = Newgem.new(args, opts)
+script.invoke_all
+</code></p>
+
+<p>Good look with your ruby scripting!</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Console Ruby debug is easy - Leo Gallucci's blog</title>
+  <meta name="author" content="Leo Gallucci">
+
+  
+  <meta name="description" content="How many times have you thought that debugging is difficult so instead of finding out how to do it you simply started adding puts "var value: #{ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://elgalu.github.io/2013/console-ruby-debug-is-easy/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Leo Gallucci's blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18144954-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:elgalu.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+    <li><a href="/">
+        <span class="blue_light">
+            Leo Gallucci's blog
+        </span>
+       
+           <span class="blue_dark">
+             about Ruby and friendly technologies
+           </span>
+       
+    </a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Console Ruby Debug Is Easy</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-01T13:11:00-03:00" pubdate data-updated="true">Mar 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>How many times have you thought that debugging is difficult so instead of finding out how to do it you simply started adding <code>puts "var value: #{some_var}"</code> all over your code and even external gems code!</p>
+
+<p>Well i have news for you guys, ruby debug from your terminal is easy.</p>
+
+<p>All you need to start is requiring <code>'debug'</code> when calling your ruby script or ruby binary:</p>
+
+<pre><code>ruby -r debug your_program.rb
+</code></pre>
+
+<p>Below, take a look at how i debugged <a href="https://github.com/wycats/thor">thor</a> gem to add a <a href="https://github.com/wycats/thor/pull/311">new config option</a>:</p>
+
+<p>I executed some thor script with <code>ruby -rdebug script.rb</code> then:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Set a breakpoint at directory.rb line 80:</span>
+</span><span class='line'><span class="k">break</span> <span class="o">~</span><span class="sr">/.rbenv/</span><span class="n">versions</span><span class="o">/</span><span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">p0</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="n">gems</span><span class="o">/</span><span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">gems</span><span class="o">/</span><span class="n">thor</span><span class="o">-</span><span class="mi">0</span><span class="o">.</span><span class="mi">17</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">thor</span><span class="o">/</span><span class="n">actions</span><span class="o">/</span><span class="n">directory</span><span class="o">.</span><span class="n">rb</span><span class="p">:</span><span class="mi">80</span>
+</span><span class='line'><span class="c1"># Now run until program ends or hits a breakpoint</span>
+</span><span class='line'><span class="n">cont</span>
+</span><span class='line'><span class="c1"># Take a look at the local variables after hitting that breakpoint:</span>
+</span><span class='line'><span class="nb">local_variables</span>
+</span><span class='line'><span class="c1">#=&gt; [:file_source, :file_destination, :dirname, :destination, :lookup]</span>
+</span><span class='line'><span class="n">file_source</span>
+</span><span class='line'><span class="c1">#=&gt; &quot;~/.newgem-templates/default/.git/description&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Play around in that console as you normally do with irb and..</p>
+
+<p>have fun!!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Leo Gallucci</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-01T13:11:00-03:00" pubdate data-updated="true">Mar 1<span>st</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/debug/'>debug</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://elgalu.github.io/2013/console-ruby-debug-is-easy/" data-via="elgalu" data-counturl="http://elgalu.github.io/2013/console-ruby-debug-is-easy/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/how-to-run-thor-tasks-from-your-ruby-scripts/" title="Previous Post: How to run thor tasks from your ruby scripts">&laquo; How to run thor tasks from your ruby scripts</a>
+      
+      
+        <a class="basic-alignment right" href="/2013/tools-for-creating-your-first-ruby-gem/" title="Next Post: Tools for creating your first ruby gem">Tools for creating your first ruby gem &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/run-protractor-against-internet-explorer-vm/">Run protractor against Internet Explorer VM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/add-achievement-badges-to-your-gem-readme/">Add achievement badges to your gem README</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/jsonp-for-dummies/">JSONP for Dummies</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/tools-for-creating-your-first-ruby-gem/">Tools for creating your first ruby gem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/console-ruby-debug-is-easy/">Console Ruby debug is easy</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/elgalu">@elgalu</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'elgalu',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("elgalu", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/elgalu" class="twitter-follow-button" data-show-count="false">Follow @elgalu</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Leo Gallucci -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'elgalu';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://elgalu.github.io/2013/console-ruby-debug-is-easy/';
+        var disqus_url = 'http://elgalu.github.io/2013/console-ruby-debug-is-easy/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

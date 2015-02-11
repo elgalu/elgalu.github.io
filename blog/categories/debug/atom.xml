@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: debug | Leo Gallucci's blog]]></title>
+  <link href="http://elgalu.github.io/blog/categories/debug/atom.xml" rel="self"/>
+  <link href="http://elgalu.github.io/"/>
+  <updated>2015-02-10T21:57:55-03:00</updated>
+  <id>http://elgalu.github.io/</id>
+  <author>
+    <name><![CDATA[Leo Gallucci]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Console Ruby debug is easy]]></title>
+    <link href="http://elgalu.github.io/2013/console-ruby-debug-is-easy/"/>
+    <updated>2013-03-01T13:11:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/console-ruby-debug-is-easy</id>
+    <content type="html"><![CDATA[<p>How many times have you thought that debugging is difficult so instead of finding out how to do it you simply started adding <code>puts "var value: #{some_var}"</code> all over your code and even external gems code!</p>
+
+<p>Well i have news for you guys, ruby debug from your terminal is easy.</p>
+
+<p>All you need to start is requiring <code>'debug'</code> when calling your ruby script or ruby binary:</p>
+
+<pre><code>ruby -r debug your_program.rb
+</code></pre>
+
+<p>Below, take a look at how i debugged <a href="https://github.com/wycats/thor">thor</a> gem to add a <a href="https://github.com/wycats/thor/pull/311">new config option</a>:</p>
+
+<p>I executed some thor script with <code>ruby -rdebug script.rb</code> then:</p>
+
+<p>```ruby</p>
+
+<h1>Set a breakpoint at directory.rb line 80:</h1>
+
+<p>break ~/.rbenv/versions/2.0.0-p0/lib/ruby/gems/2.0.0/gems/thor-0.17.0/lib/thor/actions/directory.rb:80</p>
+
+<h1>Now run until program ends or hits a breakpoint</h1>
+
+<p>cont</p>
+
+<h1>Take a look at the local variables after hitting that breakpoint:</h1>
+
+<p>local_variables</p>
+
+<h1>=> [:file_source, :file_destination, :dirname, :destination, :lookup]</h1>
+
+<p>file_source</p>
+
+<h1>=> "~/.newgem-templates/default/.git/description"</h1>
+
+<p>```</p>
+
+<p>Play around in that console as you normally do with irb and..</p>
+
+<p>have fun!!</p>
+]]></content>
+  </entry>
+  
+</feed>

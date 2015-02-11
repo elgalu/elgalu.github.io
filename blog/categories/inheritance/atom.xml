@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: inheritance | Leo Gallucci's blog]]></title>
+  <link href="http://elgalu.github.io/blog/categories/inheritance/atom.xml" rel="self"/>
+  <link href="http://elgalu.github.io/"/>
+  <updated>2015-02-10T21:57:55-03:00</updated>
+  <id>http://elgalu.github.io/</id>
+  <author>
+    <name><![CDATA[Leo Gallucci]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[When to use Ruby inheritance versus mixins]]></title>
+    <link href="http://elgalu.github.io/2013/when-to-use-ruby-inheritance-versus-mixins/"/>
+    <updated>2013-02-20T13:49:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/when-to-use-ruby-inheritance-versus-mixins</id>
+    <content type="html"><![CDATA[<p>In Ruby, I prefer to use <a href="http://en.wikipedia.org/wiki/Inheritance_(computer_science)">inheritance</a> to establish a subtype from an existing object; to say for example that a Car is a kind of Vehicle.</p>
+
+<p>But to use <a href="http://en.wikipedia.org/wiki/Mixin">mixins</a> as a way to reuse code.
+Car and Aircraf, for example, are both kind of vehicles but a Car may include a Wheeled mechanism while an Aircraft an Air::Skied one:</p>
+
+<p>```ruby Car and Aircraf both vehicles but Car includes a Wheeled mechanism while Aircraft an Air::Skied
+class Vehicle; end</p>
+
+<p>class Car &lt; Vehicle
+  include TransportationMechanism::Land::Wheeled
+end</p>
+
+<p>class Aircraft &lt; Vehicle
+  include TransportationMechanism::Air::Skied
+end
+```</p>
+
+<p>Decisions regarding what is what deeply depends on your <a href="http://en.wikipedia.org/wiki/Domain_knowledge">domain knowledge</a> so you'll end up with a subjective solution hopefully producing a code nice to read then easy to understand.</p>
+]]></content>
+  </entry>
+  
+</feed>

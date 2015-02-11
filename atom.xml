@@ -1,114 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Leo Gallucci's blog</title>
-  <meta name="author" content="Leo Gallucci">
-
-  
-  <meta name="description" content="Step 1 - Get Virtualbox Is free and available on many platforms https://www.virtualbox.org/wiki/Downloads Step 2 - Get a free Windows Virtual Machine &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://elgalu.github.io/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="Leo Gallucci's blog" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-18144954-6']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-</head>
-
-<body   >
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:elgalu.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-    <li><a href="/">
-        <span class="blue_light">
-            Leo Gallucci's blog
-        </span>
-       
-           <span class="blue_dark">
-             about Ruby and friendly technologies
-           </span>
-       
-    </a></li>
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="/about">About me</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+  <title><![CDATA[Leo Gallucci's blog]]></title>
+  <link href="http://elgalu.github.io/atom.xml" rel="self"/>
+  <link href="http://elgalu.github.io/"/>
+  <updated>2015-02-10T21:57:55-03:00</updated>
+  <id>http://elgalu.github.io/</id>
+  <author>
+    <name><![CDATA[Leo Gallucci]]></name>
     
-      <h1 class="entry-title"><a href="/2014/run-protractor-against-internet-explorer-vm/">Run Protractor Against Internet Explorer VM</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
-
-
-<time datetime="2014-12-21T17:25:00-03:00" pubdate data-updated="true">Dec 21<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2 id="step1">Step 1 - Get Virtualbox</h2>
+  <entry>
+    <title type="html"><![CDATA[Run protractor against Internet Explorer VM]]></title>
+    <link href="http://elgalu.github.io/2014/run-protractor-against-internet-explorer-vm/"/>
+    <updated>2014-12-21T17:25:00-03:00</updated>
+    <id>http://elgalu.github.io/2014/run-protractor-against-internet-explorer-vm</id>
+    <content type="html"><![CDATA[<h2 id="step1">Step 1 - Get Virtualbox</h2>
 
 
 <p>Is free and available on many platforms</p>
@@ -122,7 +32,7 @@
 
 <p><a href="http://modern.ie/en-us/virtualization-tools#downloads">http://modern.ie/en-us/virtualization-tools#downloads</a></p>
 
-<p><img src="/images/virtualbox_for_linux_modernIE.png" title="VirtualBox images for Linux" alt="VirtualBox IE images" /></p>
+<p><img src="http://elgalu.github.io/images/virtualbox_for_linux_modernIE.png" title="VirtualBox images for Linux" alt="VirtualBox IE images" /></p>
 
 <p>If, like me, you need to test against IE9, IE10, IE11 then you&#8217;ll need to download 2 VMs, one for each IE version, e.g.:</p>
 
@@ -148,27 +58,27 @@ Install link here:</p>
 
 <p>Go to Internet explorer options, follow these screen shots to get all setup:</p>
 
-<p><img src="/images/IE11_options1_delete_browsing_history_on_exit.png" title="IE11_options1_delete_browsing_history_on_exit" alt="IE11_options1_delete_browsing_history_on_exit" /></p>
+<p><img src="http://elgalu.github.io/images/IE11_options1_delete_browsing_history_on_exit.png" title="IE11_options1_delete_browsing_history_on_exit" alt="IE11_options1_delete_browsing_history_on_exit" /></p>
 
-<p><img src="/images/IE11_options2_disable_protected_mode_all_zones.png" title="IE11_options2_disable_protected_mode_all_zones" alt="IE11_options2_disable_protected_mode_all_zones" /></p>
+<p><img src="http://elgalu.github.io/images/IE11_options2_disable_protected_mode_all_zones.png" title="IE11_options2_disable_protected_mode_all_zones" alt="IE11_options2_disable_protected_mode_all_zones" /></p>
 
-<p><img src="/images/IE11_options3_turn_OFF_popup_bloquer.png" title="IE11_options3_turn_OFF_popup_bloquer" alt="IE11_options3_turn_OFF_popup_bloquer" /></p>
+<p><img src="http://elgalu.github.io/images/IE11_options3_turn_OFF_popup_bloquer.png" title="IE11_options3_turn_OFF_popup_bloquer" alt="IE11_options3_turn_OFF_popup_bloquer" /></p>
 
-<p><img src="/images/IE11_options4_disable_autocomplete.png" title="IE11_options4_disable_autocomplete" alt="IE11_options4_disable_autocomplete" /></p>
+<p><img src="http://elgalu.github.io/images/IE11_options4_disable_autocomplete.png" title="IE11_options4_disable_autocomplete" alt="IE11_options4_disable_autocomplete" /></p>
 
-<p><img src="/images/IE11_options5_dont_check_certificates_and_erase_temporary_files.png" title="IE11_options5_dont_check_certificates_and_erase_temporary_files" alt="IE11_options5_dont_check_certificates_and_erase_temporary_files" /></p>
+<p><img src="http://elgalu.github.io/images/IE11_options5_dont_check_certificates_and_erase_temporary_files.png" title="IE11_options5_dont_check_certificates_and_erase_temporary_files" alt="IE11_options5_dont_check_certificates_and_erase_temporary_files" /></p>
 
-<p><img src="/images/IE11_options6_leave_warnings_unchecked.png" title="IE11_options6_leave_warnings_unchecked" alt="IE11_options6_leave_warnings_unchecked" /></p>
+<p><img src="http://elgalu.github.io/images/IE11_options6_leave_warnings_unchecked.png" title="IE11_options6_leave_warnings_unchecked" alt="IE11_options6_leave_warnings_unchecked" /></p>
 
 <h6 id="step4-ie10-or-less-only">Following an IE10 / IE9 / IE8 necessary option:</h6>
 
 
-<p><img src="/images/IE10_disable_accelerator_button_on_selection.png" title="IE10_disable_accelerator_button_on_selection" alt="IE10_disable_accelerator_button_on_selection" /></p>
+<p><img src="http://elgalu.github.io/images/IE10_disable_accelerator_button_on_selection.png" title="IE10_disable_accelerator_button_on_selection" alt="IE10_disable_accelerator_button_on_selection" /></p>
 
 <h6 id="step4-ie11-auto-updates">Check &#8220;Install new versions automatically&#8221;</h6>
 
 
-<p><img src="/images/IE11_check_Install_new_versions_automatically.png" title="IE11_check_Install_new_versions_automatically" alt="IE11_check_Install_new_versions_automatically" /></p>
+<p><img src="http://elgalu.github.io/images/IE11_check_Install_new_versions_automatically.png" title="IE11_check_Install_new_versions_automatically" alt="IE11_check_Install_new_versions_automatically" /></p>
 
 <h2 id="step5">Step 5 - Download selenium standalone, latest</h2>
 
@@ -194,11 +104,11 @@ Install link here:</p>
 
 <p>Running that file will trigger the Windows security pop up so you can authorize the executable with <strong>Run anyway</strong> to get that remembered by Windows:</p>
 
-<p><img src="/images/IEDriverServer_run_anyway_windows.png" title="IEDriverServer_run_anyway_windows" alt="IEDriverServer_run_anyway_windows" /></p>
+<p><img src="http://elgalu.github.io/images/IEDriverServer_run_anyway_windows.png" title="IEDriverServer_run_anyway_windows" alt="IEDriverServer_run_anyway_windows" /></p>
 
 <p>Then <em>Allow access</em> for it. This is more related to Windows firewall actually:</p>
 
-<p><img src="/images/IEDriverServer_enable_firewall.png" title="IEDriverServer_enable_firewall" alt="IEDriverServer_enable_firewall" /></p>
+<p><img src="http://elgalu.github.io/images/IEDriverServer_enable_firewall.png" title="IEDriverServer_enable_firewall" alt="IEDriverServer_enable_firewall" /></p>
 
 <p><strong>IMPORTANT</strong> Close running <code>IEDriverServer.exe</code> now, this run was only to trigger Windows security and firewall dialogs.</p>
 
@@ -250,7 +160,7 @@ Install link here:</p>
 
 <p>Note port 4444 is the default selenium port, you can change it if needed. We need Windows firewall to add a rule to allow incoming connections to that port; accept all when the Firewall screen appears after running <code>ie11.bat</code></p>
 
-<p><img src="/images/Windows_firewall_for_java.png" title="Windows_firewall_for_java" alt="Windows_firewall_for_java" /></p>
+<p><img src="http://elgalu.github.io/images/Windows_firewall_for_java.png" title="Windows_firewall_for_java" alt="Windows_firewall_for_java" /></p>
 
 <p><strong>IMPORTANT</strong> Leave this script running on Windows machine. When you restart the VM you&#8217;ll have to manually start <code>ie11.bat</code> again unless you add it to the startup program list.</p>
 
@@ -390,42 +300,15 @@ Follow setup wizard.</p>
 <p>Hope this post helps you.</p>
 
 <p>Have a good time writing e2e protractor tests !  :D</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/add-achievement-badges-to-your-gem-readme/">Add Achievement Badges to Your Gem README</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-14T19:02:00-03:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I really enjoy crashing into a gem with a markdown-ready README file that includes top badges telling me things like the current available gem version, the fact that is continuously being tested using travis or knowing the developer cares about the gem dependencies being up-to-date!</p>
+  <entry>
+    <title type="html"><![CDATA[Add achievement badges to your gem README]]></title>
+    <link href="http://elgalu.github.io/2013/add-achievement-badges-to-your-gem-readme/"/>
+    <updated>2013-12-14T19:02:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/add-achievement-badges-to-your-gem-readme</id>
+    <content type="html"><![CDATA[<p>I really enjoy crashing into a gem with a markdown-ready README file that includes top badges telling me things like the current available gem version, the fact that is continuously being tested using travis or knowing the developer cares about the gem dependencies being up-to-date!</p>
 
 <p>Take a look how this looks like in <a href="https://github.com/wycats/thor#readme">thor</a> or some tiny <a href="https://github.com/elgalu/boolean_class#booleanclass">gem</a> of mine.</p>
 
@@ -568,42 +451,15 @@ TODO: Your gem description
 
 
 <p>That should be it. Remember to check later on Google Analytics site for the collected data, works like a charm!</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/jsonp-for-dummies/">JSONP for Dummies</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-08T23:54:00-03:00" pubdate data-updated="true">Mar 8<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>If you read <a href="http://en.wikipedia.org/wiki/JSONP">wikipedia</a> definition:</p>
+  <entry>
+    <title type="html"><![CDATA[JSONP for Dummies]]></title>
+    <link href="http://elgalu.github.io/2013/jsonp-for-dummies/"/>
+    <updated>2013-03-08T23:54:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/jsonp-for-dummies</id>
+    <content type="html"><![CDATA[<p>If you read <a href="http://en.wikipedia.org/wiki/JSONP">wikipedia</a> definition:</p>
 
 <blockquote><p>JSONP or &#8220;JSON with padding&#8221; is a communication technique used in JavaScript. It provides a method to request data from a server in a different domain, something prohibited by typical web browsers because of the same origin policy.</p></blockquote>
 
@@ -656,43 +512,16 @@ TODO: Your gem description
 
 <p>You should see an alert saying your current (ip based location) country name after half a second or so.</p>
 
-<p><img src="/images/J50Npi_alert_sample.png" title="Optional title" alt="J50Npi IMG" /></p>
-</div>
+<p><img src="http://elgalu.github.io/images/J50Npi_alert_sample.png" title="Optional title" alt="J50Npi IMG" /></p>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/tools-for-creating-your-first-ruby-gem/">Tools for Creating Your First Ruby Gem</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-05T11:24:00-03:00" pubdate data-updated="true">Mar 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post is about tools you can use to turn your ruby idea into a ruby gem so you can share it with the ruby world.
+  <entry>
+    <title type="html"><![CDATA[Tools for creating your first ruby gem]]></title>
+    <link href="http://elgalu.github.io/2013/tools-for-creating-your-first-ruby-gem/"/>
+    <updated>2013-03-05T11:24:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/tools-for-creating-your-first-ruby-gem</id>
+    <content type="html"><![CDATA[<p>This post is about tools you can use to turn your ruby idea into a ruby gem so you can share it with the ruby world.
 I will use a tiny gem of mine <a href="https://github.com/elgalu/twitter_anonymous_client">twitter_anonymous_client</a> as a practical example and also use some power tools like <a href="http://yardoc.org/">yard</a> that may be overkill for this tiny project but nice to know when working on bigger projects later on.</p>
 
 <h2>Gem Creation</h2>
@@ -1118,42 +947,15 @@ Run yard server! i will pass a different port cause i&#8217;m already using 8808
 <li><a href="http://mlomnicki.com/ruby/rubygems/2011/01/22/jeweler-vs-bundler.html">Jeweler vs Bundler for gem development</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/console-ruby-debug-is-easy/">Console Ruby Debug Is Easy</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-01T13:11:00-03:00" pubdate data-updated="true">Mar 1<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>How many times have you thought that debugging is difficult so instead of finding out how to do it you simply started adding <code>puts "var value: #{some_var}"</code> all over your code and even external gems code!</p>
+  <entry>
+    <title type="html"><![CDATA[Console Ruby debug is easy]]></title>
+    <link href="http://elgalu.github.io/2013/console-ruby-debug-is-easy/"/>
+    <updated>2013-03-01T13:11:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/console-ruby-debug-is-easy</id>
+    <content type="html"><![CDATA[<p>How many times have you thought that debugging is difficult so instead of finding out how to do it you simply started adding <code>puts "var value: #{some_var}"</code> all over your code and even external gems code!</p>
 
 <p>Well i have news for you guys, ruby debug from your terminal is easy.</p>
 
@@ -1190,42 +992,15 @@ Run yard server! i will pass a different port cause i&#8217;m already using 8808
 <p>Play around in that console as you normally do with irb and..</p>
 
 <p>have fun!!</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/how-to-run-thor-tasks-from-your-ruby-scripts/">How to Run Thor Tasks From Your Ruby Scripts</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-26T15:10:00-03:00" pubdate data-updated="true">Feb 26<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>If you have a thor task defined in some file like i do:</p>
+  <entry>
+    <title type="html"><![CDATA[How to run thor tasks from your ruby scripts]]></title>
+    <link href="http://elgalu.github.io/2013/how-to-run-thor-tasks-from-your-ruby-scripts/"/>
+    <updated>2013-02-26T15:10:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/how-to-run-thor-tasks-from-your-ruby-scripts</id>
+    <content type="html"><![CDATA[<p>If you have a thor task defined in some file like i do:</p>
 
 <div><script src='https://gist.github.com/5040554.js?file=newgem.thor'></script>
 <noscript><pre><code></code></pre></noscript></div>
@@ -1261,42 +1036,15 @@ Run yard server! i will pass a different port cause i&#8217;m already using 8808
 
 
 <p>Good look with your ruby scripting!</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/when-to-use-ruby-inheritance-versus-mixins/">When to Use Ruby Inheritance Versus Mixins</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-20T13:49:00-03:00" pubdate data-updated="true">Feb 20<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In Ruby, I prefer to use <a href="http://en.wikipedia.org/wiki/Inheritance_(computer_science)">inheritance</a> to establish a subtype from an existing object; to say for example that a Car is a kind of Vehicle.</p>
+  <entry>
+    <title type="html"><![CDATA[When to use Ruby inheritance versus mixins]]></title>
+    <link href="http://elgalu.github.io/2013/when-to-use-ruby-inheritance-versus-mixins/"/>
+    <updated>2013-02-20T13:49:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/when-to-use-ruby-inheritance-versus-mixins</id>
+    <content type="html"><![CDATA[<p>In Ruby, I prefer to use <a href="http://en.wikipedia.org/wiki/Inheritance_(computer_science)">inheritance</a> to establish a subtype from an existing object; to say for example that a Car is a kind of Vehicle.</p>
 
 <p>But to use <a href="http://en.wikipedia.org/wiki/Mixin">mixins</a> as a way to reuse code.
 Car and Aircraf, for example, are both kind of vehicles but a Car may include a Wheeled mechanism while an Aircraft an Air::Skied one:</p>
@@ -1323,152 +1071,7 @@ Car and Aircraf, for example, are both kind of vehicles but a Car may include a 
 
 
 <p>Decisions regarding what is what deeply depends on your <a href="http://en.wikipedia.org/wiki/Domain_knowledge">domain knowledge</a> so you&#8217;ll end up with a subjective solution hopefully producing a code nice to read then easy to understand.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/2014/run-protractor-against-internet-explorer-vm/">Run protractor against Internet Explorer VM</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/add-achievement-badges-to-your-gem-readme/">Add achievement badges to your gem README</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/jsonp-for-dummies/">JSONP for Dummies</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/tools-for-creating-your-first-ruby-gem/">Tools for creating your first ruby gem</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2013/console-ruby-debug-is-easy/">Console Ruby debug is easy</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <a href="https://github.com/elgalu">@elgalu</a> on GitHub
-  
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'elgalu',
-            count: 3,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-<section>
-  <h1>Latest Tweets</h1>
-  <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  <script type="text/javascript">
-    $.domReady(function(){
-      getTwitterFeed("elgalu", 4, false);
-    });
-  </script>
-  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
-  
-    <a href="http://twitter.com/elgalu" class="twitter-follow-button" data-show-count="false">Follow @elgalu</a>
-  
-</section>
-
-
-
-
-
-  
-</aside>
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Leo Gallucci -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-<script type="text/javascript">
-      var disqus_shortname = 'elgalu';
-      
-        
-        var disqus_script = 'count.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
-</html>
+</feed>

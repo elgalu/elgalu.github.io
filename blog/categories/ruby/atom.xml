@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ruby | Leo Gallucci's blog]]></title>
+  <link href="http://elgalu.github.io/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://elgalu.github.io/"/>
+  <updated>2015-02-10T21:57:55-03:00</updated>
+  <id>http://elgalu.github.io/</id>
+  <author>
+    <name><![CDATA[Leo Gallucci]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Add achievement badges to your gem README]]></title>
+    <link href="http://elgalu.github.io/2013/add-achievement-badges-to-your-gem-readme/"/>
+    <updated>2013-12-14T19:02:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/add-achievement-badges-to-your-gem-readme</id>
+    <content type="html"><![CDATA[<p>I really enjoy crashing into a gem with a markdown-ready README file that includes top badges telling me things like the current available gem version, the fact that is continuously being tested using travis or knowing the developer cares about the gem dependencies being up-to-date!</p>
+
+<p>Take a look how this looks like in <a href="https://github.com/wycats/thor#readme">thor</a> or some tiny <a href="https://github.com/elgalu/boolean_class#booleanclass">gem</a> of mine.</p>
+
+<p>Achieving all that will take some steps, here is how:</p>
+
+<h2>How the badges will look like</h2>
+
+<p><a href="https://rubygems.org/gems/boolean_class"><img src="https://badge.fury.io/rb/boolean_class.png" alt="Gem Version" /></a>
+<a href="https://travis-ci.org/elgalu/boolean_class"><img src="https://travis-ci.org/elgalu/boolean_class.png" alt="Build Status" /></a>
+<a href="https://gemnasium.com/elgalu/boolean_class"><img src="https://gemnasium.com/elgalu/boolean_class.png" alt="Dependency Status" /></a>
+<a href="https://codeclimate.com/github/elgalu/boolean_class"><img src="https://codeclimate.com/github/elgalu/boolean_class.png" alt="Code Climate" /></a>
+<a href="https://coveralls.io/r/elgalu/boolean_class"><img src="https://coveralls.io/repos/elgalu/boolean_class/badge.png?branch=master" alt="Coverage Status" /></a></p>
+
+<h2>Where to sign-up</h2>
+
+<ul>
+<li><p>For the gem version badge just <a href="http://guides.rubygems.org/command-reference/#gem_push">push to rubygems</a> at least 1 time and the badge will be there for you. Also, the "Version Badge" page offers an easy copy and paste builder of the URL that you can use <a href="http://badge.fury.io/for/rb/">here</a></p></li>
+<li><p>For your build status go to <a href="https://travis-ci.org">Travis-CI.org</a> and follow the link "Sign in with GitHub"</p></li>
+<li><p>For gem dependencies status <a href="https://gemnasium.com/users/auth/github">Signup at Gemnasium</a></p></li>
+<li><p>For code quality stats <a href="https://codeclimate.com/github/signup">Signup at Code Climate</a></p></li>
+<li><p>For coverage percentage first <a href="https://coveralls.io/authorize/github">Signup once at Coveralls</a> then for each of you projects go to the <a href="https://coveralls.io/repos/new">Add Repo page</a></p></li>
+<li><p>For analytics <a href="http://www.google.com/analytics">Signup at Google Analytics</a> and <a href="http://githalytics.com/">Signup at githalytics</a></p></li>
+<li><p>For pretty documentation generator read <a href="http://documentup.com">here</a>
+or simply go to <code>documentup.com/your_github_user/your_repo_name</code></p></li>
+</ul>
+
+
+<h2>Getting your code ready to use them</h2>
+
+<p>Gem version, code climate and gem dependencies do not require more work on your side besides pushing your updates to github, those services will take care of the rest.</p>
+
+<h3>Travis-CI</h3>
+
+<p>Add this <code>.travis.yml</code> file to your project root, change it depending on the ruby versions you are interested to support:</p>
+
+<p><code>ruby
+language: ruby
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - jruby-1.7.9
+</code></p>
+
+<h3>Coveralls with SimpleCov</h3>
+
+<p>I use <a href="https://github.com/colszowka/simplecov">SimpleCov</a> for test coverage, coveralls gem take care of your badge,</p>
+
+<p>Add necessary dependencies to your gemspec:</p>
+
+<p><code>ruby
+s.add_development_dependency "simplecov", "&gt;= 0.8.2"
+s.add_development_dependency 'coveralls', '&gt;= 0.7.0'
+</code></p>
+
+<p>If you use rspec, update your <code>spec_helper.rb</code> and add this lines to the very beginning:</p>
+
+<p>```ruby
+require 'simplecov'
+require 'coveralls'</p>
+
+<p>SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+SimpleCov.start
+```</p>
+
+<h2>Update your README file</h2>
+
+<p>Replace strings <strong>elgalu</strong> with your github user and <strong>boolean_class</strong> with your github repo name.
+It's probably a better idea that you use a templating tool for this like <a href="https://github.com/elgalu/gem-newgem">the one I built and use</a></p>
+
+<pre><code># TODO: Your gem name
+
+[![Gem Version][GV img]][Gem Version]
+[![Build Status][BS img]][Build Status]
+[![Dependency Status][DS img]][Dependency Status]
+[![Code Climate][CC img]][Code Climate]
+[![Coverage Status][CS img]][Coverage Status]
+
+## Description
+
+TODO: Your gem description
+
+[Gem Version]: https://rubygems.org/gems/boolean_class
+[Build Status]: https://travis-ci.org/elgalu/boolean_class
+[travis pull requests]: https://travis-ci.org/elgalu/boolean_class/pull_requests
+[Dependency Status]: https://gemnasium.com/elgalu/boolean_class
+[Code Climate]: https://codeclimate.com/github/elgalu/boolean_class
+[Coverage Status]: https://coveralls.io/r/elgalu/boolean_class
+
+[GV img]: https://badge.fury.io/rb/boolean_class.png
+[BS img]: https://travis-ci.org/elgalu/boolean_class.png
+[DS img]: https://gemnasium.com/elgalu/boolean_class.png
+[CC img]: https://codeclimate.com/github/elgalu/boolean_class.png
+[CS img]: https://coveralls.io/repos/elgalu/boolean_class/badge.png?branch=master
+</code></pre>
+
+<p>Don't forget to let me know if i'm missing new cool badges out there!</p>
+
+<h2>Google Analytics</h2>
+
+<p>I've recently added <a href="http://githalytics.com/">githalytics</a> service in order to have <a href="http://www.google.com/analytics/">Google Analytics</a> for each of my github repos. Note there is also <a href="https://bitdeli.com/">bitdeli</a> service but haven't tested it yet, let me know if is better or more free.</p>
+
+<p>To do so:</p>
+
+<ol>
+<li><p>Go to <a href="http://www.google.com/analytics/">Google Analytics</a> website and signup to get your Property ID, e.g.</p>
+
+<pre><code> Default URL protocol: https://
+ Default URL source..: github.com/elgalu/time_ago_in_words
+</code></pre>
+
+<p> You may also delete <code>github.com</code> from your GA <strong>Referral Exclusion List</strong></p></li>
+<li><p>Go to <a href="http://githalytics.com/">githalytics</a> and sign up, e.g.</p>
+
+<pre><code> TrackingCode[url]:  https://github.com/elgalu/time_ago_in_words
+ TrackingCode[code]: UA-12345-12
+</code></pre></li>
+<li><p>Add the fake image badge that will send data for analytics purposes, e.g.</p>
+
+<pre><code> [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/3fe2425a26ab0ca00b5bc6acf817af59 "githalytics.com")](http://githalytics.com/elgalu/time_ago_in_words)
+</code></pre></li>
+</ol>
+
+
+<p>That should be it. Remember to check later on Google Analytics site for the collected data, works like a charm!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tools for creating your first ruby gem]]></title>
+    <link href="http://elgalu.github.io/2013/tools-for-creating-your-first-ruby-gem/"/>
+    <updated>2013-03-05T11:24:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/tools-for-creating-your-first-ruby-gem</id>
+    <content type="html"><![CDATA[<p>This post is about tools you can use to turn your ruby idea into a ruby gem so you can share it with the ruby world.
+I will use a tiny gem of mine <a href="https://github.com/elgalu/twitter_anonymous_client">twitter_anonymous_client</a> as a practical example and also use some power tools like <a href="http://yardoc.org/">yard</a> that may be overkill for this tiny project but nice to know when working on bigger projects later on.</p>
+
+<h2>Gem Creation</h2>
+
+<p>You have a couple of options to start your gem files and directory structure, you can choose to write all of if from scratch, copy &amp; paste from another gem source you liked, or use a bootstrap tool that does the work for you.</p>
+
+<p>A popular option is using <a href="http://gembundler.com/v1.2/bundle_gem.html">bundle gem</a> <em>GEMNAME</em> to bootstrap your gem. I started with bundler but right after the third gem i got tired of being fixed to a template not so easy to customize without sticking my nose around <a href="https://github.com/carlhuda/bundler/tree/master/lib/bundler/templates/newgem">bundler</a> source.</p>
+
+<p>So i partially extracted that into a gem called <a href="https://github.com/elgalu/gem-newgem">gem-newgem</a> and turned it into a RubyGems plugin which is what i will use in this post.</p>
+
+<h3>Bootstrap your gem</h3>
+
+<p>```bash
+$ gem install gem-newgem
+Successfully installed gem-newgem-0.1.1</p>
+
+<p>$ gem new twitter_anonymous_client --summary 'Twitter public (anonymous) client for old v1.0 API'</p>
+
+<pre><code>  create  twitter_anonymous_client
+  create  twitter_anonymous_client/twitter_anonymous_client.gemspec
+  create  twitter_anonymous_client/.gitignore
+  create  twitter_anonymous_client/.rspec
+  create  twitter_anonymous_client/.travis.yml
+  create  twitter_anonymous_client/CHANGELOG.md
+  create  twitter_anonymous_client/Gemfile
+  create  twitter_anonymous_client/LICENSE.md
+  create  twitter_anonymous_client/README.md
+  create  twitter_anonymous_client/Rakefile
+  create  twitter_anonymous_client/lib/twitter_anonymous_client.rb
+  create  twitter_anonymous_client/lib/twitter_anonymous_client/version.rb
+  create  twitter_anonymous_client/spec/twitter_anonymous_client_spec.rb
+  create  twitter_anonymous_client/spec/spec_helper.rb
+</code></pre>
+
+<p>INFO: Initializing git repo at twitter_anonymous_client/
+  git init
+Initialized empty Git repository in ~/twitter_anonymous_client/.git/
+  git add .
+INFO: Will add remote so you get ready to push to github
+  git remote add github git@github.com:elgalu/twitter_anonymous_client.git
+INFO: Make branch tracking automatic
+  git config --add branch.master.remote github
+  git config --add branch.master.merge refs/heads/master</p>
+
+<p>$ cd twitter_anonymous_client
+```</p>
+
+<p>If you take a look at the files you will see how your <code>~/.gitconfig</code> information is used, the gem name you provided and the summary are used even in the README.md file.</p>
+
+<p>This is how my <a href="https://github.com/elgalu/twitter_anonymous_client/blob/master/twitter_anonymous_client.gemspec">.gemspec</a> was generated, you'll soon find out this is opinionated stuff, feel free to modify the <a href="https://github.com/elgalu/newgem-template">template</a> found at <code>~/.newgem-templates</code> to get the requirements you need:</p>
+
+<p>```ruby .gemspec
+require 'twitter_anonymous_client/version'
+Gem::Specification.new do |spec|
+  spec.platform      = Gem::Platform::RUBY
+  spec.name          = "twitter_anonymous_client"
+  spec.version       = TwitterAnonymousClient::VERSION
+  spec.summary       = %q{Twitter public (anonymous) client for old v1.0 API}
+  spec.description   = spec.summary</p>
+
+<p>  spec.required_ruby_version     = '>= 1.9.2'
+  spec.required_rubygems_version = '>= 1.8'</p>
+
+<p>  spec.license       = 'MIT'</p>
+
+<p>  spec.authors       = ["Leo Gallucci"]
+  spec.email         = ["elgalu3@gmail.com"]
+  spec.homepage      = "https://github.com/elgalu/twitter_anonymous_client"</p>
+
+<p>  spec.executables   = spec.files.grep(%r{<sup>bin/}).map{</sup> |f| File.basename(f) }
+  spec.files         = <code>git ls-files</code>.split($/)
+  spec.test_files    = spec.files.grep(%r{<sup>(test|spec|features)/})</sup>
+  spec.require_paths = ["lib"]</p>
+
+<p>  spec.add_development_dependency "bundler", ">= 1.2"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec", "~> 2.13"
+  spec.add_development_dependency "redcarpet", ">= 2.2"
+  spec.add_development_dependency "yard", ">= 0.8"
+  spec.add_development_dependency "simplecov", ">= 0.7.1"
+  spec.add_development_dependency 'coveralls', '>= 0.5.8'
+end
+```</p>
+
+<p>I will just add one runtime dependency there:</p>
+
+<p><code>ruby Add to .gemspec
+  spec.add_runtime_dependency "strongly_typed"
+</code></p>
+
+<p>By looking at the README.md file, you'll see how much i like putting badges at the top of the doc.
+You will need to sign-up to those services to get your gem up and running, i wrote another <a href="http://elgalu.github.com/2013/add-achievement-badges-to-your-gem-readme/">post</a> on how to do it.</p>
+
+<h3>Spec first, code later</h3>
+
+<p>First and foremost, check everything is working with bundler and rspec:</p>
+
+<p>```bash</p>
+
+<h1>Why not, use the latest available ruby version (as of this writing)</h1>
+
+<p>$ ruby -v
+ruby 2.0.0p0 (2013-02-24 revision 39474) [x86_64-linux]</p>
+
+<h1>Get your Gemfile.lock ready</h1>
+
+<p>$ bundle install
+Using ...
+Installing ...
+Using twitter_anonymous_client (0.0.1) from source ...</p>
+
+<h1>Let's see if some rake tasks are already available</h1>
+
+<p>$ bundle exec rake -T
+rake build    # Build twitter_anonymous_client-0.0.1.gem into the pkg directory.
+rake install  # Build and install twitter_anonymous_client-0.0.1.gem into system gems.
+rake release  # Create tag v0.0.1 and build and push twitter_anonymous_client-0.0.1.gem to Rubygems
+rake spec     # Run RSpec code examples</p>
+
+<h1>Check the default task is to run the spec's</h1>
+
+<p>$ bundle exec rake
+...
+TwitterAnonymousClient
+  should have a version number</p>
+
+<p>Finished in 0.00537 seconds
+1 example, 0 failures
+...
+```</p>
+
+<p>Everything nice so far!</p>
+
+<p>Now is time to write about what we expect from this gem:</p>
+
+<p>Create a spec file like <code>spec/user_timeline_spec.rb</code></p>
+
+<p>```ruby spec/user_timeline_spec.rb
+require 'spec_helper'</p>
+
+<p>describe Twitter::Client do
+  let(:screen_name) { 'elgalu' }
+  let(:client) { Twitter::Client.new }
+  let(:tweets) { client.user_timeline(screen_name, count: 1) }
+  let(:first_tweet) { tweets.first }</p>
+
+<p>  describe '#user_timeline' do</p>
+
+<pre><code>context 'first tweet' do
+  it 'should be a Tweet' do
+    first_tweet.should be_a(Twitter::Tweet)
+  end
+
+  it 'should respond to id, text, created_at' do
+    first_tweet.should respond_to(:id)
+    first_tweet.should respond_to(:text)
+    first_tweet.should respond_to(:created_at)
+  end
+end
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>```</p>
+
+<p>Let's leave out web mocking for now and expect those specs to run against real twitter servers.</p>
+
+<p>Run <code>$ bundle exec rake spec</code> and watch it fail.</p>
+
+<h3>Code to make the specs pass</h3>
+
+<p>Good luck with that! .... or ... take a look at <a href="https://github.com/elgalu/twitter_anonymous_client">twitter_anonymous_client</a> source code.</p>
+
+<h2>Add documentation using <a href="http://yardoc.org/">yard</a></h2>
+
+<p>Yard is really nice producing beauty documentation files, all you need to do is remember a few keywords:</p>
+
+<p>```ruby Yard Doc Example http://rubydoc.info/gems/twitter_anonymous_client/Twitter/API/Timelines#user_timeline-instance_method</p>
+
+<h1>Get some user timeline by screen name (last statuses)</h1>
+
+<p>#</p>
+
+<h1>@param [String] screen_name the twitter user slug</h1>
+
+<h1>@param [Hash] opts the options to retrieve the statuses</h1>
+
+<h1>@option opts [Integer] :count The number of statuses to retrieve</h1>
+
+<p>#</p>
+
+<h1>@example</h1>
+
+<h1>Twitter::Client.new.user_timeline('DolarBlue', count: 1)</h1>
+
+<h1>#=> [#&lt;Twitter::Tweet:0x011.. @id="308609..., @text="Dolar Paralelo: $7,84.....</h1>
+
+<p>def user_timeline(screen_name, opts)
+  .......
+```</p>
+
+<p>You should always check how your documentation looks like from time to time
+Run yard server! i will pass a different port cause i'm already using 8808 with something else:</p>
+
+<p>```bash
+$ bundle exec yard server --port 8828 --reload</p>
+
+<p>Files:           2
+...
+Methods:         1 (    0 undocumented)
+ 33.33% documented</p>
+
+<blockquote><blockquote><p>YARD 0.8.4.1 documentation server at http://0.0.0.0:8828
+...
+```</p></blockquote></blockquote>
+
+<p>Open your browser at (http://localhost:8828) and find some of your type errors ;)</p>
+
+<h2>Publish your gem</h2>
+
+<p>Ensure you have your github username configured:</p>
+
+<pre><code>git config --global github.user your_user_name
+</code></pre>
+
+<h3>Only the first time on the your gem:</h3>
+
+<pre><code>curl -u your_user_name https://rubygems.org/api/v1/api_key.yaml &gt; ~/.gem/credentials
+### Enter host password for user 'your_user_name': ......
+</code></pre>
+
+<h3>Every time you push a gem release</h3>
+
+<p>Follow these steps</p>
+
+<p>```bash</p>
+
+<h1>Commit your changes</h1>
+
+<p>git add ... &amp;&amp; git commit ...</p>
+
+<h1>Run specs on each ruby version you support to make sure everything works</h1>
+
+<p>rbenv shell 2.0.0-p0
+bundle exec rake spec
+rbenv shell 1.9.3-p392
+bundle exec rake spec</p>
+
+<h1>Separate commit to bump version</h1>
+
+<p>git add ... version.rb
+git commit -m 'Bump version to 0.0.1'</p>
+
+<h1>Tag your release</h1>
+
+<p>git tag -a v0.0.1 -m 'Version 0.0.1'</p>
+
+<h1>Build your gem</h1>
+
+<p>gem build twitter_anonymous_client.gemspec</p>
+
+<h1>Push to github</h1>
+
+<p>git remote add origin git@github.com:elgalu/twitter_anonymous_client.git</p>
+
+<h1>Make tracking automatic</h1>
+
+<p>git config --add branch.master.remote origin
+git config --add branch.master.merge refs/heads/master</p>
+
+<h1>Push updates and tags</h1>
+
+<p>git push origin master
+git push origin master --tags</p>
+
+<h1>Push to rubygems</h1>
+
+<p>gem push twitter_anonymous_client-0.0.1.gem</p>
+
+<h1>=> Pushing gem to https://rubygems.org...</h1>
+
+<h1>=> Successfully registered gem: twitter_anonymous_client (0.0.1)</h1>
+
+<p>```</p>
+
+<p>Now tell ma you have your own ruby gem!</p>
+
+<h2>More info</h2>
+
+<p>If you need to go down into more details you can check:</p>
+
+<ul>
+<li><a href="https://github.com/radar/guides/blob/master/gem-development.md">radar guide on gem-development</a></li>
+<li><a href="http://guides.rubygems.org/make-your-own-gem/">RubyGems guide</a></li>
+<li><a href="http://mlomnicki.com/ruby/rubygems/2011/01/22/jeweler-vs-bundler.html">Jeweler vs Bundler for gem development</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Console Ruby debug is easy]]></title>
+    <link href="http://elgalu.github.io/2013/console-ruby-debug-is-easy/"/>
+    <updated>2013-03-01T13:11:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/console-ruby-debug-is-easy</id>
+    <content type="html"><![CDATA[<p>How many times have you thought that debugging is difficult so instead of finding out how to do it you simply started adding <code>puts "var value: #{some_var}"</code> all over your code and even external gems code!</p>
+
+<p>Well i have news for you guys, ruby debug from your terminal is easy.</p>
+
+<p>All you need to start is requiring <code>'debug'</code> when calling your ruby script or ruby binary:</p>
+
+<pre><code>ruby -r debug your_program.rb
+</code></pre>
+
+<p>Below, take a look at how i debugged <a href="https://github.com/wycats/thor">thor</a> gem to add a <a href="https://github.com/wycats/thor/pull/311">new config option</a>:</p>
+
+<p>I executed some thor script with <code>ruby -rdebug script.rb</code> then:</p>
+
+<p>```ruby</p>
+
+<h1>Set a breakpoint at directory.rb line 80:</h1>
+
+<p>break ~/.rbenv/versions/2.0.0-p0/lib/ruby/gems/2.0.0/gems/thor-0.17.0/lib/thor/actions/directory.rb:80</p>
+
+<h1>Now run until program ends or hits a breakpoint</h1>
+
+<p>cont</p>
+
+<h1>Take a look at the local variables after hitting that breakpoint:</h1>
+
+<p>local_variables</p>
+
+<h1>=> [:file_source, :file_destination, :dirname, :destination, :lookup]</h1>
+
+<p>file_source</p>
+
+<h1>=> "~/.newgem-templates/default/.git/description"</h1>
+
+<p>```</p>
+
+<p>Play around in that console as you normally do with irb and..</p>
+
+<p>have fun!!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to run thor tasks from your ruby scripts]]></title>
+    <link href="http://elgalu.github.io/2013/how-to-run-thor-tasks-from-your-ruby-scripts/"/>
+    <updated>2013-02-26T15:10:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/how-to-run-thor-tasks-from-your-ruby-scripts</id>
+    <content type="html"><![CDATA[<p>If you have a thor task defined in some file like i do:</p>
+
+<p><div><script src='https://gist.github.com/5040554.js?file=newgem.thor'></script>
+<noscript><pre><code></code></pre></noscript></div>
+</p>
+
+<p>Normally, you would invoke this thor task <em>newgem</em> from the command-line like this:</p>
+
+<pre><code>$ thor newgem some_name --test-framework rspec
+</code></pre>
+
+<p>But what if you need to do that from another ruby script?</p>
+
+<p>Well, you can do so by passing the arguments directly, like this:</p>
+
+<p><code>ruby
+args = ["some_name", "--test-framework", "rspec"]
+Newgem.start(args)
+</code></p>
+
+<p>Using <a href="http://rdoc.info/github/wycats/thor/Thor/Base/ClassMethods#start-instance_method">start</a> is a way to go, but thor <a href="https://github.com/wycats/thor/blob/master/lib/thor/base.rb#L423">documentation</a> suggest using invoke() instead, like this:</p>
+
+<p><code>ruby
+args = ["some_name"]
+opts = {:test_framework =&gt; 'rspec'}
+script = Newgem.new(args, opts)
+script.invoke_all
+</code></p>
+
+<p>Good look with your ruby scripting!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[When to use Ruby inheritance versus mixins]]></title>
+    <link href="http://elgalu.github.io/2013/when-to-use-ruby-inheritance-versus-mixins/"/>
+    <updated>2013-02-20T13:49:00-03:00</updated>
+    <id>http://elgalu.github.io/2013/when-to-use-ruby-inheritance-versus-mixins</id>
+    <content type="html"><![CDATA[<p>In Ruby, I prefer to use <a href="http://en.wikipedia.org/wiki/Inheritance_(computer_science)">inheritance</a> to establish a subtype from an existing object; to say for example that a Car is a kind of Vehicle.</p>
+
+<p>But to use <a href="http://en.wikipedia.org/wiki/Mixin">mixins</a> as a way to reuse code.
+Car and Aircraf, for example, are both kind of vehicles but a Car may include a Wheeled mechanism while an Aircraft an Air::Skied one:</p>
+
+<p>```ruby Car and Aircraf both vehicles but Car includes a Wheeled mechanism while Aircraft an Air::Skied
+class Vehicle; end</p>
+
+<p>class Car &lt; Vehicle
+  include TransportationMechanism::Land::Wheeled
+end</p>
+
+<p>class Aircraft &lt; Vehicle
+  include TransportationMechanism::Air::Skied
+end
+```</p>
+
+<p>Decisions regarding what is what deeply depends on your <a href="http://en.wikipedia.org/wiki/Domain_knowledge">domain knowledge</a> so you'll end up with a subjective solution hopefully producing a code nice to read then easy to understand.</p>
+]]></content>
+  </entry>
+  
+</feed>
